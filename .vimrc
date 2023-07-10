@@ -2,8 +2,6 @@ call plug#begin()
 
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
-Plug 'preservim/nerdtree'
-
 Plug 'majutsushi/tagbar'
 
 " Plug 'ryanoasis/vim-devicons'
@@ -20,6 +18,10 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 Plug 'sainnhe/everforest'
 
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
 call plug#end()
 
 syntax on
@@ -27,7 +29,7 @@ syntax enable
 filetype plugin indent on
 
 " ============================================
-" ===============   colorsche  ===============
+" =============   colorscheme  ===============
 " ============================================
 
 " * everforest *
@@ -40,11 +42,14 @@ set background=dark
 let g:everforest_background = 'soft'
 colorscheme everforest
 
+" ============================================
+" ==============   lightline  ================
+" ============================================
+set cursorline
+set laststatus=2
+set noshowmode
 
 " * onehalf *
-"set cursorline
-"set laststatus=2
-"set noshowmode
 "colorscheme onehalflight
 "let g:lightline = { 'colorscheme': 'onehalflight' }
 "
@@ -80,6 +85,7 @@ set mouse=a
 set nowrap
 
 nmap <F5> :TagbarToggle<CR>
+nmap <F6> :NERDTreeToggle<CR>
 
 let kernel_src_home=$PWD
 if filereadable(kernel_src_home . "/cscope.out")
@@ -96,7 +102,7 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 
 " enable omnicompletion
 set omnifunc=syntaxcomplete#Complete
@@ -166,6 +172,11 @@ autocmd FileType go nmap <leader>T <Plug>(go-test-func)
 autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+
 let g:go_list_type = "quickfix"
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -173,3 +184,15 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_def_mode = 'godef'
+let g:go_decls_includes = "func,type"
+
+
+" ============================================
+" ===============   nerdtree   ===============
+" ============================================
+let g:NERDTreeQuitOnOpen=1
