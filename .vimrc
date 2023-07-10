@@ -14,12 +14,40 @@ Plug 'altercation/solarized'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+Plug 'itchyny/lightline.vim'
+
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+
+Plug 'sainnhe/everforest'
+
 call plug#end()
 
 syntax on
 syntax enable
 filetype plugin indent on
 
+" ============================================
+" ===============   colorsche  ===============
+" ============================================
+
+" * everforest *
+if has('termguicolors')
+        set termguicolors
+endif
+
+set background=dark
+
+let g:everforest_background = 'soft'
+colorscheme everforest
+
+
+" * onehalf *
+"set cursorline
+"set laststatus=2
+"set noshowmode
+"colorscheme onehalflight
+"let g:lightline = { 'colorscheme': 'onehalflight' }
+"
 " set
 " General
 set number              " Show line numbers
@@ -49,7 +77,6 @@ set fileencodings=utf-8,euc-kr
 set ruler
 set mouse=a
 " set cc=80
-set background=dark
 set nowrap
 
 nmap <F5> :TagbarToggle<CR>
@@ -136,5 +163,13 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>r <Plug>(go-run)
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>T <Plug>(go-test-func)
+autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 let g:go_list_type = "quickfix"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
