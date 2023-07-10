@@ -12,6 +12,8 @@ Plug 'scrooloose/syntastic'
 
 Plug 'altercation/solarized'
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 call plug#end()
 
 syntax on
@@ -36,6 +38,8 @@ set smartindent         " Enable smart-indent
 set smarttab            " Enable smart-tabs
 set softtabstop=4       " Number of spaces per Tab
 
+set autowrite
+
 set encoding=UTF-8
 set ai
 set si
@@ -43,8 +47,9 @@ set ci
 set ts=4 sts=4 sw=4
 set fileencodings=utf-8,euc-kr
 set ruler
-set mouse=
-set cc=80
+set mouse=a
+" set cc=80
+set background=dark
 set nowrap
 
 nmap <F5> :TagbarToggle<CR>
@@ -107,3 +112,29 @@ let OmniCpp_MayCompleteArrow = 1
 let OmniCpp_MayCompleteScope = 0
 " Don't select first item in pop-up menu
 let OmniCpp_SelectFirstItem = 0
+
+" ============================================
+" ================   vim-go   ================
+" ============================================
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+        let l:file = expand('%')
+        if l:file =~# '^\f\+_test\.go$'
+                call go#test#Test(0, 1)
+        elseif l:file =~# '^\f\+\.go$'
+                call go#cmd#Build(0)
+        endif
+endfunction
+
+let mapleader=","
+
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+" autocmd FileType go nmap <leader>b <Plug>(go-build)
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>r <Plug>(go-run)
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <leader>T <Plug>(go-test-func)
+
+let g:go_list_type = "quickfix"
