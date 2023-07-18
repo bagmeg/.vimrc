@@ -27,6 +27,7 @@ call plug#end()
 syntax on
 syntax enable
 filetype plugin indent on
+let mapleader=","
 
 " ============================================
 " =============   colorscheme  ===============
@@ -37,9 +38,9 @@ if has('termguicolors')
         set termguicolors
 endif
 
-set background=dark
+set background=light
 
-let g:everforest_background = 'hard'
+let g:everforest_background = 'medium'
 colorscheme everforest
 
 " ============================================
@@ -84,8 +85,8 @@ set mouse=a
 " set cc=80
 set nowrap
 
-nmap <F5> :TagbarToggle<CR>
-nmap <F6> :NERDTreeToggle<CR>
+nmap <leader>B :TagbarToggle<CR>
+nmap <leader>N :NERDTreeToggle<CR>
 
 let kernel_src_home=$PWD
 if filereadable(kernel_src_home . "/cscope.out")
@@ -159,7 +160,6 @@ function! s:build_go_files()
         endif
 endfunction
 
-let mapleader=","
 
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
@@ -171,6 +171,13 @@ autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>T <Plug>(go-test-func)
 autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 " autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType go nmap <S-F5> :GoDebugStart<CR>
+autocmd FileType go nmap <M-F5> :GoDebugStop<CR>
+autocmd FileType go nmap <C-S-F5> :GoDebugRestart<CR>
+autocmd FileType go nmap <F5> :GoDebugContinue<CR>
+autocmd FileType go nmap <F9> :GoDebugBreakpoint<CR>
+autocmd FileType go nmap <F10> :GoDebugNext<CR>
+autocmd FileType go nmap <F11> :GoDebugStep<CR>
 
 autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
 autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
