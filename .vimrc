@@ -39,7 +39,7 @@ endif
 
 set background=dark
 
-let g:everforest_background = 'soft'
+let g:everforest_background = 'hard'
 colorscheme everforest
 
 " ============================================
@@ -170,7 +170,7 @@ autocmd FileType go nmap <leader>r <Plug>(go-run)
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>T <Plug>(go-test-func)
 autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+" autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
 autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
@@ -188,9 +188,17 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-let g:go_def_mode = 'godef'
+"let g:go_def_mode = 'godef'
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 let g:go_decls_includes = "func,type"
 
+" ============================================
+" ===============   yaml set   ===============
+" ============================================
+
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+let g:indentLine_char = '|'
 
 " ============================================
 " ===============   nerdtree   ===============
