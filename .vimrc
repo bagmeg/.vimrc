@@ -199,6 +199,11 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_decls_includes = "func,type"
+let g:go_debug_windows = {
+      \ 'vars':       'leftabove 30vnew',
+      \ 'stack':      'leftabove 20new',
+	  \ 'out':        'botright 10new',
+      \ }
 
 " ============================================
 " ===============   yaml set   ===============
